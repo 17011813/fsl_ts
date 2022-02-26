@@ -1,7 +1,7 @@
-# fsl_ts
+# 시계열 few shot learning (f-s-l)
 few shot time series predict / anomaly detection based on MAML
 
-## 包依赖
+## 패키지 종속성
 * python3.*
 * pandas
 * numpy
@@ -9,38 +9,38 @@ few shot time series predict / anomaly detection based on MAML
 * pytorch(torch 1.6.0+cu101)
 * higher
 
-## 包依赖安装说明
-使用如下命令进行python环境配置
+## 패키지 설치
+python 환경 구성을 위한 명령어
 ```
 pip3 install -r requirements.txt
 ```
 
-## 程序运行说明
-在项目根路径下通过使用脚本来运行程序，运行脚本前需要先赋予执行权限，即输入以下命令：
+## 프로그램 실행
+프로젝트 **루트 경로**에 있는 스크립트를 이용하여 프로그램 **실행 스크립트**를 실행할 때, 아래의 명령어를 통해 **실행 권한**을 부여해야함
 ```
 chmod +x meta_run.sh
 ```
-执行脚本
+스크립트 실행
 ```
-'meta_run.sh':运行few shot time series prediction脚本程序
-```
-
-脚本中含有较多的超参数，详情可以参考'超参数说明'
-
-## 说明
-**代码结构**
-```
--- fsl_ts_dataloader.py：用于获取meta train的batch task训练数据
--- fsl_ts_maml.py：few shot learning的主控程序，包含train、evaluate、test、predict等多个过程，且包含超参数含义与默认值
--- lstm_learner.py：lstm模型，MAML中的base model
--- maml_higher_learner：MAML算法的主要实现模块，包含meta_train和fine_tune
--- plot_tools.py：画图工具类
--- meta_run.sh：执行few shot learning的脚本程序
+'meta_run.sh': few shot time series prediction 스크립트 프로그램 실행 (run)
 ```
 
-**数据说明**
+스크립트에는 많은 하이퍼파라미터가 존재하며, 자세한 사항은 '하이퍼파라미터 설명'을 참고
 
-目前使用了4个KPI数据集，已经预处理完毕并置于以下目录：
+## 설명
+**코드 구조**
+```
+-- fsl_ts_dataloader.py：meta train의 batch task 훈련 데이터를 얻기 위한 코드
+-- fsl_ts_maml.py：few shot learning 메인 제어 프로그램，train、evaluate、test、predict 다중 프로세스를 포함，하이퍼파라미터 의미와 기본값을 포함
+-- lstm_learner.py：lstm 모델，MAML 가운데 base model
+-- maml_higher_learner：MAML 알고리즘의 주요 구현 모듈，meta_train과 fine_tune 포함
+-- plot_tools.py：시각화
+-- meta_run.sh：few shot learning 스크립트 프로그램 구현
+```
+
+**데이터셋**
+
+4개의 KPI 데이터 세트 사용 중，사전 처리되어 아래의 디렉토리에 배치되어있음：
 ```
 -- fsl_generator
 ---- fsl_pool
@@ -50,37 +50,37 @@ chmod +x meta_run.sh
 ------- xxx_qry_y_pool.npy
 ------- ......
 ```
-也可以使用自定义数据集与dataloader，输入格式符合MAML模块、lstm模块对support set和query set的要求即可。
+사용자가 정의한 데이터 세트를 사용하는것도 가능 dataloader，입력 형식은 MAML 모듈을 따름、lstm 모듈의 support set과 query set의 요구사항은 아래와 같음。
 
-**超参数说明**
+**하이퍼파라미터 설명**
 
-meta_run.sh中有一些超参数，含义如下：
+meta_run.sh에는 아래의 의미를 가진 하이퍼파라미터가 있음：
 
-*路径类参数*
+*경로 클래스 매개변수*
 ```
-model_params_dir: 模型的保存路径
-figure_dir: 训练相关图像的输出路径
-logs_dir: 日志存放路径
-logs_name: 日志名称，默认输出都存放在该日志中，命令行无输出，需要观察输出时可用cat命令捕获该日志内容
-check_point: 初始化模型参数对应的检查点名称
+model_params_dir: 모델을 저장하는 경로
+figure_dir: 관련 이미지 교육을 위한 출력 경로
+logs_dir: 로그 저장 경로
+logs_name: 로그의 이름. 기본 출력은 로그에 저장. 명령줄의 출력은 없음. 출력을 관찰해야 하는 경우 cat 명령을 사용하여 로그 내용을 캡처할 수 있음
+check_point: 모델 매개변수에 해당하는 체크포인트 이름 초기화
 ```
-*meta-training参数*
+*meta-training 매개변수*
 ```
-epoch: meta-training训练轮次
-n_ways: （暂时没用，分类任务中n-way-k-shot的定义）
-k_spt: 每个task中support set的数量
-k_qry: 每个task中query set的数量
-task_num: meta_train阶段task batch对应的batch大小
-task_num_eval: meta_evaluate阶段task batch对应的batch大小
-task_num_test: meta_test阶段task batch对应的batch大小
-meta_lr: meta_update(outer loop)的学习率
-update_lr: inner loop的学习率
-update_step: meta_train阶段inner loop的更新次数
-update_step_test: meta_test阶段fine_tune的更新次数
-clip_val: gradient clipping的参数（避免梯度爆炸）
+epoch: meta-training 학습 횟수
+n_ways: （일시적으로 쓸모 없음 ??，분류 작업에서 n-way-k-shot 정의）
+k_spt: 각 task 당 support set 갯수
+k_qry: 각 task 당 query set 갯수
+task_num: meta_train 단계의 task batch에 해당하는 batch 크기
+task_num_eval: meta_evaluate 단계의 task batch에 해당하는 batch 크기
+task_num_test: meta_test 단계의 task batch에 해당하는 batch 크기
+meta_lr: meta_update(outer loop) 학습 속도
+update_lr: inner loop 학습 속도
+update_step: meta_train 단계의 inner loop 업데이트 횟수
+update_step_test: meta_test 단계의 fine_tune 업데이트 횟수
+clip_val: gradient clipping을 위한 매개변수（그라디언트 폭발 방지）
 ```
-*cuda参数*
+*cuda 매개변수*
 ```
-cuda_no: 使用第几号显卡，对应'CUDA_VISIBLE_DEVICES=no'种的'no'
-no_cuda: 如果不使用显卡，则在meta_run.sh的python执行命令中加入'--no_cuda'即可
+cuda_no: 사용할 그래픽 카드，'CUDA_VISIBLE_DEVICES=no'의 'no'에 해당
+no_cuda: 그래픽 카드를 사용하지 않는 경우，meta_run.sh의 python 실행 명령에 '--no_cuda' 추가
 ```
