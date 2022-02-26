@@ -1,4 +1,4 @@
-# few shot time series predict / anomaly detection based on MAML 시계열 few shot learning (fsl)
+# few shot learning (fsl) time series predict / anomaly detection based on MAML
 
 **코드 구조**
 ```
@@ -7,7 +7,6 @@
 -- lstm_learner.py：lstm 모델，MAML 가운데 base model
 -- maml_higher_learner：MAML 알고리즘의 주요 구현 모듈，meta_train과 fine_tune 포함
 -- plot_tools.py：시각화
--- meta_run.sh：few shot learning 스크립트 프로그램 구현
 ```
 
 **데이터셋**
