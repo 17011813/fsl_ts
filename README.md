@@ -1,33 +1,5 @@
-# 시계열 few shot learning (f-s-l)
-few shot time series predict / anomaly detection based on MAML
+# few shot time series predict / anomaly detection based on MAML 시계열 few shot learning (fsl)
 
-## 패키지 종속성
-* python3.*
-* pandas
-* numpy
-* matplotlib
-* pytorch(torch 1.6.0+cu101)
-* higher
-
-## 패키지 설치
-python 환경 구성을 위한 명령어
-```
-pip3 install -r requirements.txt
-```
-
-## 프로그램 실행
-프로젝트 **루트 경로**에 있는 스크립트를 이용하여 프로그램 **실행 스크립트**를 실행할 때, 아래의 명령어를 통해 **실행 권한**을 부여해야함
-```
-chmod +x meta_run.sh
-```
-스크립트 실행
-```
-'meta_run.sh': few shot time series prediction 스크립트 프로그램 실행 (run)
-```
-
-스크립트에는 많은 하이퍼파라미터가 존재하며, 자세한 사항은 '하이퍼파라미터 설명'을 참고
-
-## 설명
 **코드 구조**
 ```
 -- fsl_ts_dataloader.py：meta train의 batch task 훈련 데이터를 얻기 위한 코드
@@ -78,9 +50,4 @@ update_lr: inner loop 학습 속도
 update_step: meta_train 단계의 inner loop 업데이트 횟수
 update_step_test: meta_test 단계의 fine_tune 업데이트 횟수
 clip_val: gradient clipping을 위한 매개변수（그라디언트 폭발 방지）
-```
-*cuda 매개변수*
-```
-cuda_no: 사용할 그래픽 카드，'CUDA_VISIBLE_DEVICES=no'의 'no'에 해당
-no_cuda: 그래픽 카드를 사용하지 않는 경우，meta_run.sh의 python 실행 명령에 '--no_cuda' 추가
 ```
